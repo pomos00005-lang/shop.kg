@@ -6,5 +6,7 @@ urlpatterns = [
     path('время/',views.second_blog),
     path('фото/',views.third_blog),
 
+    path('product_list/', views.product),
+    path('product_list/<int:id>/', views.product_detail),
 ]
 
