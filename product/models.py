@@ -20,3 +20,22 @@ class Products(models.Model):
     class Meta():
         verbose_name = 'Список продуктов'
         verbose_name_plural = 'Список продутов'
+class Reviews(models.Model):
+    choice_blog = models.ForeignKey(Products, on_delete=models.CASCADE,related_name="review")
+    MARKS = (
+        ('🌟','🌟'),
+        ('🌟🌟','🌟🌟'),
+        ('🌟🌟🌟','🌟🌟🌟'),
+        ('🌟🌟🌟🌟','🌟🌟🌟🌟'),
+        ('🌟🌟🌟🌟🌟','🌟🌟🌟🌟🌟'),
+    )
+    marks = models.CharField(max_length=100,choices=MARKS,default='🌟🌟🌟🌟🌟')
+    text = models.TextField(verbose_name='Отзыв',max_length=100)
+    created_ad = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'{self.choice_blog}-{self.marks}'
+    
+    class Meta():
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'

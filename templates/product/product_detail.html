@@ -1,44 +1,60 @@
 {% load static %}
 
+{% include '../header.html' %}
 
-  <!-- Во всех двойных фигурных скобках - передаем ключ из views.py и названия поля из models.py -->
+<link rel="stylesheet" href="{% static 'styles/style.css' %}">
 
-   <div class="news-detail">
+<!-- Во всех двойных фигурных скобках - передаем ключ из views.py и названия поля из models.py -->
+<div class="product-detail">
 
-    <h1 class="news-title">{{ product_id.name_product }}</h1>
+    <h1 class="product-title">{{ product_id.name_product }}</h1>
 
-    <div class="news-media">
+    <div class="product-media">
         <img src="{{ product_id.image.url }}" alt="{{ product_id.title }}">
     </div>
 
-    <p class="news-description">{{ product_id.description }}</p>
-    <p class="news-category">Категория: {{ product_id.Who_is_the_product_for }}</p>
-    <p class="news-count">Количество: {{ product_id.count}}</p>
-    <p class="news-count">Стоимость: {{ product_id.price}} сом</p>
-
-
-    <data class="news-date">{{ product_id.created_at }}</data>
+    <div class="product-info">
+        <p class="product-description">{{ product_id.description }}</p>
+        <p class="product-category">
+            <strong>Категория:</strong> {{ product_id.Who_is_the_product_for }}
+        </p>
+        <p class="product-count">
+            <strong>Количество:</strong> {{ product_id.count }}
+        </p>
+        <p class="product-price">
+            <strong>Стоимость:</strong> {{ product_id.price }} сом
+        </p>
+        <data class="product-date">{{ product_id.created_at }}</data>
+    </div>
 
 </div>
 
 <!-- Comments -->
 <div class="comments">
-  <h3 class="comments-title">Отзывы</h3>
+    <h3 class="comments-title">Отзывы</h3>
 
-  {% for i in product_id.review.all %}
-  <ul>
-    <li>
-      <p class="rating">Оценка: 
-        <span class="stars" aria-hidden="true">
-          <span class="star filled">{{ i.marks }}</span>
-        </span>
-      </p>
+    {% if product_id.review.all %}
+        <ul class="comments-list">
+            {% for i in product_id.review.all %}
+                <li class="comment-item">
+                    <p class="rating">
+                        Оценка:
+                        <span class="stars">{{ i.marks }}</span>
+                    </p>
 
-      <p class="review">Отзыв: {{ i.text }}</p>
+                    <p class="review-text">
+                        {{ i.text }}
+                    </p>
 
-      <p class="date">Дата: {{ i.created_at }}</p>
-    </li>
-
-  </ul>
-  {% endfor %}
+                    <p class="comment-date">
+                        {{ i.created_ad }}
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-comments">Нет отзывов</p>
+    {% endif %}
 </div>
+
+{% include '../footer.html' %}

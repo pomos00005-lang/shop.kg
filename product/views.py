@@ -1,9 +1,8 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
-import datetime as dt
+from datetime import datetime as dt
 from product.models import Products
 
-now = dt.datetime.now()
 
 def product_detail(req, id):
     if req.method == 'GET':
@@ -15,6 +14,19 @@ def product_detail(req, id):
             'product_id' : product_id
         }
     )
+
+def product(req):
+    if req.method == 'GET':
+        # query - запрос из БД указывает под видом переменной product
+        product = Products.objects.all()
+    return render(
+        req,
+        template_name='product/product_list.html',
+        context={
+            'product': product
+        }
+    )
+
 
 def first_blog(req):
     if req.method == 'GET':
@@ -30,22 +42,13 @@ def first_blog(req):
             '</ol>'
         )
 #получение данных
-def product(req):
-    if req.method == 'GET':
-        # query - запрос из БД указывает под видом переменной product
-        product = Products.objects.all()
-    return render(
-        req,
-        template_name='product/product_list.html',
-        context={
-            'product': product
-        }
-    )
 
 
 def second_blog(req):
-    if req.method == 'GET':
-        return HttpResponse(now.strftime("%d.%m.%Y %H:%M:%S" ))
+    if req.method == "GET":
+        now = dt.now().strftime("%Y-%m-%d %H:%M:%S")
+        return HttpResponse(f'Текущее время-{now}')
+
 
 def third_blog(req):
     if req.method == 'GET':
