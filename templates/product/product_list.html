@@ -28,4 +28,16 @@
     {% endfor %}
 </ul>
 
+<h1>Категории</h1>
+
+<ul>
+    {% for category in categories %}
+        <li>
+            <a href="{% url 'category_products' category.id %}">
+                {{ category.name_category }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+
 {% include '../footer.html' %}
